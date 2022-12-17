@@ -3,7 +3,7 @@ from crm.accounts.models import Order
 from crm.accounts.models import Product
 # Return all customers from customer table
 customers = Customer.objects.all()
-
+orders = Order.objects.all()
 # Return first customer
 firstCustomer = Customer.objects.first()
 
