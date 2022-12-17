@@ -10,6 +10,11 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+class Tag(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     # create tuple of values for drop-out menu
     CATEGORY = (
@@ -19,8 +24,9 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField(null=True)
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
-    description = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
+    tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
@@ -33,7 +39,7 @@ class Order(models.Model):
         ('Delivered', 'Delivered'),
     )
 
-    #customer
-    #product
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     datetime = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS)
